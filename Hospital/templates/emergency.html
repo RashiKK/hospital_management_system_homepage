@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'common.css' %}">
+
+<h2>Available Emergency Services</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Service Type</th>
+            <th>Cost</th>
+            <th>ETA</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for service in emergency_services %}
+        <tr>
+            <td>{{ service.service_type }}</td>
+            <td>{{ service.cost }}</td>
+            <td>{{ service.ETA }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Request an Emergency Service</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Request Service</button>
+</form>
+
+{% if request_status %}
+<h3>Your Request Status: {{ request_status }}</h3>
+{% endif %}
+
+{% endblock %}
